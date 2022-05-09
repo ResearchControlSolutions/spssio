@@ -17,7 +17,8 @@ module SPSS
 
     def self.find(name)
       path = Pathname.new(__dir__).parent.parent + "ext"
-      [name, *Dir.glob("#{path}/*/#{name}.*")]
+      choices = [*Dir.glob("#{path}/*/#{name}.*"), name]
+      choices
     end
 
     begin
@@ -28,6 +29,7 @@ module SPSS
       ffi_lib find("libgsk8iccs_64")
     rescue LoadError # rubocop:disable Lint/HandleExceptions
     end
+    
     ffi_lib find("libicudata")
     ffi_lib find("libicuuc")
     ffi_lib find("libicui18n")
